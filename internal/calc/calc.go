@@ -29,6 +29,10 @@ func (c *calc) character(char rune) {
 	c.display(c.equation + string(char))
 }
 
+func (c *calc) string(str string) {
+	c.display(c.equation + str + "(")
+}
+
 func (c *calc) digit(d int) {
 	c.character(rune(d) + '0')
 }
@@ -97,6 +101,12 @@ func (c *calc) charButton(char rune) *widget.Button {
 	})
 }
 
+func (c *calc) stringButton(str string) *widget.Button {
+	return c.addButton(str, func() {
+		c.string(str)
+	})
+}
+
 func (c *calc) onTypedRune(r rune) {
 	if r == 'c' {
 		r = 'C' // The button is using a capital C.
@@ -138,32 +148,42 @@ func (c *calc) LoadUI(app fyne.App) {
 	c.window = app.NewWindow("Calc")
 	c.window.SetContent(container.NewGridWithColumns(1,
 		c.output,
-		container.NewGridWithColumns(4,
-			c.addButton("C", c.clear),
+		container.NewGridWithColumns(6,
+			c.stringButton("sqrt"),
+			c.charButton('^'),
 			c.charButton('('),
 			c.charButton(')'),
-			c.charButton('/')),
-		container.NewGridWithColumns(4,
+			c.addButton("C", c.clear),
+			c.stringButton("mod")),
+		container.NewGridWithColumns(6,
+			c.stringButton("sin"),
+			c.stringButton("asin"),
 			c.digitButton(7),
 			c.digitButton(8),
 			c.digitButton(9),
-			c.charButton('*')),
-		container.NewGridWithColumns(4,
+			c.charButton('/')),
+		container.NewGridWithColumns(6,
+			c.stringButton("cos"),
+			c.stringButton("acos"),
 			c.digitButton(4),
 			c.digitButton(5),
 			c.digitButton(6),
-			c.charButton('-')),
-		container.NewGridWithColumns(4,
+			c.charButton('*')),
+		container.NewGridWithColumns(6,
+			c.stringButton("tan"),
+			c.stringButton("atan"),
 			c.digitButton(1),
 			c.digitButton(2),
 			c.digitButton(3),
+			c.charButton('-')),
+		container.NewGridWithColumns(6,
+			c.stringButton("log"),
+			c.stringButton("ln"),
+			c.digitButton(0),
+			c.charButton('.'),
+			equals,
 			c.charButton('+')),
-		container.NewGridWithColumns(2,
-			container.NewGridWithColumns(2,
-				c.digitButton(0),
-				c.charButton('.')),
-			equals)),
-	)
+	))
 
 	canvas := c.window.Canvas()
 	canvas.SetOnTypedRune(c.onTypedRune)
