@@ -30,7 +30,7 @@ func (c *calc) character(char rune) {
 }
 
 func (c *calc) string(str string) {
-	c.display(c.equation + str + "(")
+	c.display(c.equation + str)
 }
 
 func (c *calc) digit(d int) {
@@ -106,6 +106,11 @@ func (c *calc) stringButton(str string) *widget.Button {
 		c.string(str)
 	})
 }
+func (c *calc) stringButtonWithParenthesis(str string) *widget.Button {
+	return c.addButton(str, func() {
+		c.string(str + "(")
+	})
+}
 
 func (c *calc) onTypedRune(r rune) {
 	if r == 'c' {
@@ -149,36 +154,36 @@ func (c *calc) LoadUI(app fyne.App) {
 	c.window.SetContent(container.NewGridWithColumns(1,
 		c.output,
 		container.NewGridWithColumns(6,
-			c.stringButton("sqrt"),
+			c.stringButtonWithParenthesis("sqrt"),
 			c.charButton('^'),
 			c.charButton('('),
 			c.charButton(')'),
 			c.addButton("C", c.clear),
 			c.stringButton("mod")),
 		container.NewGridWithColumns(6,
-			c.stringButton("sin"),
-			c.stringButton("asin"),
+			c.stringButtonWithParenthesis("sin"),
+			c.stringButtonWithParenthesis("asin"),
 			c.digitButton(7),
 			c.digitButton(8),
 			c.digitButton(9),
 			c.charButton('/')),
 		container.NewGridWithColumns(6,
-			c.stringButton("cos"),
-			c.stringButton("acos"),
+			c.stringButtonWithParenthesis("cos"),
+			c.stringButtonWithParenthesis("acos"),
 			c.digitButton(4),
 			c.digitButton(5),
 			c.digitButton(6),
 			c.charButton('*')),
 		container.NewGridWithColumns(6,
-			c.stringButton("tan"),
-			c.stringButton("atan"),
+			c.stringButtonWithParenthesis("tan"),
+			c.stringButtonWithParenthesis("atan"),
 			c.digitButton(1),
 			c.digitButton(2),
 			c.digitButton(3),
 			c.charButton('-')),
 		container.NewGridWithColumns(6,
-			c.stringButton("log"),
-			c.stringButton("ln"),
+			c.stringButtonWithParenthesis("log"),
+			c.stringButtonWithParenthesis("ln"),
 			c.digitButton(0),
 			c.charButton('.'),
 			equals,
@@ -190,7 +195,7 @@ func (c *calc) LoadUI(app fyne.App) {
 	canvas.SetOnTypedKey(c.onTypedKey)
 	canvas.AddShortcut(&fyne.ShortcutCopy{}, c.onCopyShortcut)
 	canvas.AddShortcut(&fyne.ShortcutPaste{}, c.onPasteShortcut)
-	c.window.Resize(fyne.NewSize(200, 300))
+	c.window.Resize(fyne.NewSize(360, 270))
 	c.window.Show()
 }
 
