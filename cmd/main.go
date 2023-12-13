@@ -2,7 +2,7 @@ package main
 
 import (
 	"fyne.io/fyne/v2/app"
-	"github.com/AtaullinShamil/SmartCalc_v3.0-Desktop_Go/internal/calc"
+	"github.com/AtaullinShamil/SmartCalc_v3.0-Desktop_Go/pkg/calc"
 )
 
 func main() {
