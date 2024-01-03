@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "../tokens/tokens.h"
+#include "../stack/stack.h"
 
 double calculate(char *arr);
 
