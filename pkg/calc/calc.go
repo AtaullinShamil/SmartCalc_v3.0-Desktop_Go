@@ -26,7 +26,7 @@ func (c *calc) display(newtext string) {
 }
 
 func (c *calc) character(char rune) {
-	c.display(c.equation + string(char))
+	c.display(c.equation + " " + string(char))
 }
 
 func (c *calc) string(str string) {
@@ -103,12 +103,12 @@ func (c *calc) charButton(char rune) *widget.Button {
 
 func (c *calc) stringButton(str string) *widget.Button {
 	return c.addButton(str, func() {
-		c.string(str)
+		c.string(" " + str)
 	})
 }
 func (c *calc) stringButtonWithParenthesis(str string) *widget.Button {
 	return c.addButton(str, func() {
-		c.string(str + "(")
+		c.string(" " + str + " " + "(")
 	})
 }
 
